@@ -1,0 +1,146 @@
+from telebot import *
+import sqlite3
+
+un = ""
+s = 0
+
+bot = TeleBot('7097774593:AAGYNaVitW-xy-ElWY_0HZ1Ai8tckXFV0lc')
+
+@bot.message_handler(commands=["start"])
+def f1 (message):
+    global un
+    un = message.from_user.username
+    murkup = types.InlineKeyboardMarkup()
+    call1 = types.InlineKeyboardButton(text="начать тестирование", callback_data="f1")
+    murkup.add(call1)
+    bot.send_message(message.chat.id, "это тестирование по программе 'виртуальные миры'."
+                                      " Данный тест содержит 10 вопросов по всем модулям.", reply_markup=murkup)
+
+
+
+@bot.callback_query_handler(func=lambda callback: callback.data)
+def f2(callback):
+    global s
+    global un
+    if callback.data == "f1":
+
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="1")
+        call2 = types.KeyboardButton(text="2")
+        murkup.add(call1, call2)
+        bot.send_message(callback.message.chat.id, "первый вопрос.1", reply_markup=murkup)
+    elif callback.data == "f2":
+
+        bot.send_message(callback.message.chat.id, str(s) + "/10")
+        conn = sqlite3.connect("test.db")
+        cur = conn.cursor()
+
+        cur.execute("CREATE TABLE IF NOT EXISTS users(id int auto_increment primary key, name TEXT, score TEXT)")
+        cur.execute(f"INSERT INTO users (name, score) VALUES ({un}, {s})")
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        
+
+@bot.message_handler()
+def f3(message):
+    global s
+    if message.text == "1" or message.text == "2":
+        if message.text == "2":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="3")
+        call2 = types.KeyboardButton(text="4")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.2", reply_markup=murkup)
+
+    elif message.text == "3" or message.text == "4":
+        if message.text == "3":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="5")
+        call2 = types.KeyboardButton(text="6")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "5" or message.text == "6":
+        if message.text == "6":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="7")
+        call2 = types.KeyboardButton(text="8")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "7" or message.text == "8":
+        if message.text == "8":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="9")
+        call2 = types.KeyboardButton(text="10")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "9" or message.text == "10":
+        if message.text == "9":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="11")
+        call2 = types.KeyboardButton(text="12")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "11" or message.text == "12":
+        if message.text == "12":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="13")
+        call2 = types.KeyboardButton(text="14")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "13" or message.text == "14":
+        if message.text == "13":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="15")
+        call2 = types.KeyboardButton(text="16")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "15" or message.text == "16":
+        if message.text == "15":
+            s += 1
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="17")
+        call2 = types.KeyboardButton(text="18")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "17" or message.text == "18":
+        if message.text == "17":
+            s += 1
+            print (s)
+        murkup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        call1 = types.KeyboardButton(text="19")
+        call2 = types.KeyboardButton(text="20")
+        murkup.add(call1, call2)
+        bot.send_message(message.chat.id, "первый вопрос.3", reply_markup=murkup)
+
+    elif message.text == "19" or message.text == "20" :
+        if message.text == "20":
+            s += 1
+            print(s)
+        murkup = types.InlineKeyboardMarkup()
+        call1 = types.InlineKeyboardButton(text="закончить тестирование", callback_data="f2")
+        murkup.add(call1)
+        bot.send_message(message.chat.id, "это тестирование по программе 'виртуальные миры'."
+                                          " Данный тест содержал 10 вопросов по всем модулям.", reply_markup=murkup)
+
+
+
+
+bot.polling()
+
